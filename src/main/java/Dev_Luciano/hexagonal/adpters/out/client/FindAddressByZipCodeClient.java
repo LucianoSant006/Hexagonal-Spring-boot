@@ -1,6 +1,5 @@
 package Dev_Luciano.hexagonal.adpters.out.client;
 
-
 import Dev_Luciano.hexagonal.adpters.out.client.response.AddressResponse;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -8,7 +7,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 @FeignClient(
         name = "FindAddressByZipCodeClient",
-        url = "${arantes.client.address.url}"
+        url = "${devluciano.client.address.url}"
 )
 public interface FindAddressByZipCodeClient {
 

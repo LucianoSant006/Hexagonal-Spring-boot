@@ -1,5 +1,6 @@
 package Dev_Luciano.hexagonal.adpters.out;
 
+
 import Dev_Luciano.hexagonal.adpters.out.client.FindAddressByZipCodeClient;
 import Dev_Luciano.hexagonal.adpters.out.client.mapper.AddressResponseMapper;
 import Dev_Luciano.hexagonal.application.core.domain.Address;
@@ -13,7 +14,7 @@ public class FindAddressByZipCodeAdapter implements FindAddressByZipCodeOutputPo
     @Autowired
     private AddressResponseMapper addressResponseMapper;
 
-    @Autowired
+
     private FindAddressByZipCodeClient findAddressByZipCodeClient;
 
 

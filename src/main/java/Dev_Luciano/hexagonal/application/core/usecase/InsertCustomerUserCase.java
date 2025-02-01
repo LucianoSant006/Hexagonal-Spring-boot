@@ -1,10 +1,11 @@
 package Dev_Luciano.hexagonal.application.core.usecase;
 
 import Dev_Luciano.hexagonal.application.core.domain.Customer;
+import Dev_Luciano.hexagonal.application.ports.in.InsertCustomerInputPort;
 import Dev_Luciano.hexagonal.application.ports.out.FindAddressByZipCodeOutputPort;
 import Dev_Luciano.hexagonal.application.ports.out.InsertCustomerOutputPort;
 
-public class InsertCustomerUserCase {
+public class InsertCustomerUserCase implements InsertCustomerInputPort {
 
     private final FindAddressByZipCodeOutputPort findAddressByZipCodeOutputPort;
     private final InsertCustomerOutputPort insertCustomerOutputPort;
@@ -14,6 +15,7 @@ public class InsertCustomerUserCase {
         this.insertCustomerOutputPort = insertCustomerOutputPort;
     }
 
+    @Override
     public void insert(Customer custumer,String zipCode){
 
         var address = findAddressByZipCodeOutputPort.find(zipCode);
