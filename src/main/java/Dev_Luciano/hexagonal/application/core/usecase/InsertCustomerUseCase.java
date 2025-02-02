@@ -5,12 +5,12 @@ import Dev_Luciano.hexagonal.application.ports.in.InsertCustomerInputPort;
 import Dev_Luciano.hexagonal.application.ports.out.FindAddressByZipCodeOutputPort;
 import Dev_Luciano.hexagonal.application.ports.out.InsertCustomerOutputPort;
 
-public class InsertCustomerUserCase implements InsertCustomerInputPort {
+public class InsertCustomerUseCase implements InsertCustomerInputPort {
 
     private final FindAddressByZipCodeOutputPort findAddressByZipCodeOutputPort;
     private final InsertCustomerOutputPort insertCustomerOutputPort;
 
-    public InsertCustomerUserCase(FindAddressByZipCodeOutputPort findAddressByZipCodeOutputPort,InsertCustomerOutputPort insertCustomerOutputPort){
+    public InsertCustomerUseCase(FindAddressByZipCodeOutputPort findAddressByZipCodeOutputPort,InsertCustomerOutputPort insertCustomerOutputPort){
         this.findAddressByZipCodeOutputPort = findAddressByZipCodeOutputPort;
         this.insertCustomerOutputPort = insertCustomerOutputPort;
     }
