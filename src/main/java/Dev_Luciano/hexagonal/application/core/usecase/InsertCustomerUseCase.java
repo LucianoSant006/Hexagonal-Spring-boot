@@ -4,23 +4,31 @@ import Dev_Luciano.hexagonal.application.core.domain.Customer;
 import Dev_Luciano.hexagonal.application.ports.in.InsertCustomerInputPort;
 import Dev_Luciano.hexagonal.application.ports.out.FindAddressByZipCodeOutputPort;
 import Dev_Luciano.hexagonal.application.ports.out.InsertCustomerOutputPort;
+import Dev_Luciano.hexagonal.application.ports.out.SendCpfForValidationOutputPort;
 
 public class InsertCustomerUseCase implements InsertCustomerInputPort {
 
     private final FindAddressByZipCodeOutputPort findAddressByZipCodeOutputPort;
     private final InsertCustomerOutputPort insertCustomerOutputPort;
+    private final SendCpfForValidationOutputPort sendCpfForValidationOutputPort;
 
-    public InsertCustomerUseCase(FindAddressByZipCodeOutputPort findAddressByZipCodeOutputPort,InsertCustomerOutputPort insertCustomerOutputPort){
+    public InsertCustomerUseCase(
+            FindAddressByZipCodeOutputPort findAddressByZipCodeOutputPort
+            ,InsertCustomerOutputPort insertCustomerOutputPort
+            ,SendCpfForValidationOutputPort sendCpfForValidationOutputPort
+    ){
         this.findAddressByZipCodeOutputPort = findAddressByZipCodeOutputPort;
         this.insertCustomerOutputPort = insertCustomerOutputPort;
+        this.sendCpfForValidationOutputPort = sendCpfForValidationOutputPort;
     }
 
     @Override
-    public void insert(Customer custumer,String zipCode){
+    public void insert(Customer customer,String zipCode){
 
         var address = findAddressByZipCodeOutputPort.find(zipCode);
-        custumer.setAddress(address);
-        insertCustomerOutputPort.insert(custumer);
+        customer.setAddress(address);
+        insertCustomerOutputPort.insert(customer);
+        sendCpfForValidationOutputPort.send(customer.getCpf());
 
     }
 }
