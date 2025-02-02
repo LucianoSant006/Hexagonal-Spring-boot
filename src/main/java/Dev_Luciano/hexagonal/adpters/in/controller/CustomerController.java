@@ -3,8 +3,10 @@ package Dev_Luciano.hexagonal.adpters.in.controller;
 import Dev_Luciano.hexagonal.adpters.in.controller.mapper.CustomerMapper;
 import Dev_Luciano.hexagonal.adpters.in.controller.request.CustomerRequest;
 import Dev_Luciano.hexagonal.adpters.in.controller.response.CustomerResponse;
+import Dev_Luciano.hexagonal.application.core.domain.Customer;
 import Dev_Luciano.hexagonal.application.ports.in.FindCustomerByIdInputPort;
 import Dev_Luciano.hexagonal.application.ports.in.InsertCustomerInputPort;
+import Dev_Luciano.hexagonal.application.ports.in.UpdateCustomerInputPort;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -20,10 +22,11 @@ public class CustomerController {
     @Autowired
     private FindCustomerByIdInputPort findCustomerByIdInputPort;
 
-
-
     @Autowired
     private CustomerMapper customerMapper;
+
+    @Autowired
+    private UpdateCustomerInputPort updateCustomerInputPort;
 
     @PostMapping
     public ResponseEntity<Void> insert(@Valid @RequestBody CustomerRequest customerRequest){
@@ -39,4 +42,15 @@ public class CustomerController {
         var customerReponse = customerMapper.toCustomerResponse(customer);
         return ResponseEntity.ok().body(customerReponse);
     }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Void> update(@PathVariable final String id,@Valid @RequestBody CustomerRequest customerRequest){
+        Customer customer = customerMapper.toCustomer(customerRequest);
+        customer.setId(id);
+        updateCustomerInputPort.update(customer,customerRequest.getZipCode());
+        ResponseEntity.noContent().build();
+
+    }
+
+
 }
