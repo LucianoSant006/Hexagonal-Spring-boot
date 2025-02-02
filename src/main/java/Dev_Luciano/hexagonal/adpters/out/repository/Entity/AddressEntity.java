@@ -10,4 +10,5 @@ public class AddressEntity {
     private String city;
 
     private String state;
+
 }

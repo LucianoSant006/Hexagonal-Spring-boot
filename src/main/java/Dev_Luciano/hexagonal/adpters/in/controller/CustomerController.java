@@ -4,6 +4,7 @@ import Dev_Luciano.hexagonal.adpters.in.controller.mapper.CustomerMapper;
 import Dev_Luciano.hexagonal.adpters.in.controller.request.CustomerRequest;
 import Dev_Luciano.hexagonal.adpters.in.controller.response.CustomerResponse;
 import Dev_Luciano.hexagonal.application.core.domain.Customer;
+import Dev_Luciano.hexagonal.application.ports.in.DeleteCustomerByIdInputPort;
 import Dev_Luciano.hexagonal.application.ports.in.FindCustomerByIdInputPort;
 import Dev_Luciano.hexagonal.application.ports.in.InsertCustomerInputPort;
 import Dev_Luciano.hexagonal.application.ports.in.UpdateCustomerInputPort;
@@ -28,6 +29,9 @@ public class CustomerController {
     @Autowired
     private UpdateCustomerInputPort updateCustomerInputPort;
 
+    @Autowired
+    DeleteCustomerByIdInputPort deleteCustomerByIdInputPort;
+
     @PostMapping
     public ResponseEntity<Void> insert(@Valid @RequestBody CustomerRequest customerRequest){
         var customer = customerMapper.toCustomer(customerRequest);
@@ -48,8 +52,14 @@ public class CustomerController {
         Customer customer = customerMapper.toCustomer(customerRequest);
         customer.setId(id);
         updateCustomerInputPort.update(customer,customerRequest.getZipCode());
-        ResponseEntity.noContent().build();
+        return ResponseEntity.noContent().build();
 
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> delete(@PathVariable final String id){
+        deleteCustomerByIdInputPort.delete(id);
+        return ResponseEntity.noContent().build();
     }
 
 

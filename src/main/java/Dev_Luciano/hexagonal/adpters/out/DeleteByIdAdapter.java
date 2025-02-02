@@ -1,0 +1,18 @@
+package Dev_Luciano.hexagonal.adpters.out;
+
+import Dev_Luciano.hexagonal.adpters.out.repository.CustomerRepository;
+import Dev_Luciano.hexagonal.application.ports.out.DeleteCustomerByIdOutputPort;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+@Component
+public class DeleteByIdAdapter implements DeleteCustomerByIdOutputPort {
+
+    @Autowired
+    private CustomerRepository customerRepository;
+
+    @Override
+    public void delete(String id) {
+        customerRepository.deleteById(id);
+    }
+}
